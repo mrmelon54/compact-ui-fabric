@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "compact-ui",
+  "version": "${version}",
+  "name": "Compact UI",
+  "description": "Makes some parts of the Minecraft menu UI more compact",
+  "authors": [
+    "MrMelon54"
+  ],
+  "contact": {
+    "website": "https://minecraft.onpointcoding.net/mods/compactui",
+    "repo": "https://github.com/MrMelon54/compact-ui-fabric"
+  },
+  "license": "MIT",
+  "icon": "assets/compact-ui/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.onpointcoding.compactui.client.CompactUIClient"
+    ]
+  },
+  "mixins": [
+    "compact-ui.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.6",
+    "fabric": "*",
+    "minecraft": "1.17"
+  }
+}
