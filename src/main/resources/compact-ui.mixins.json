@@ -3,10 +3,17 @@
   "minVersion": "0.8",
   "package": "net.onpointcoding.compactui.mixin",
   "compatibilityLevel": "JAVA_16",
+  "refmap": "compact-ui-refmap.json",
   "client": [
+    "rp.PackListWidgetMixin",
+    "rp.PackScreenMixin",
+    "rp.ResourcePackEntryMixin",
     "server.MultiplayerServerListWidgetMixin",
     "server.ServerEntryMixin",
-    "server.ServerScreenMixin"
+    "server.ServerScreenMixin",
+    "world.SelectWorldScreenMixin",
+    "world.WorldEntryMixin",
+    "world.WorldListWidgetMixin"
   ],
   "injectors": {
     "defaultRequire": 1

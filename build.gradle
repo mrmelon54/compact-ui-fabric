@@ -37,7 +37,7 @@ processResources {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/compactui.accesswidener")
+    accessWidenerPath = file("src/main/resources/compact-ui.accesswidener")
 }
 
 def targetJavaVersion = 16

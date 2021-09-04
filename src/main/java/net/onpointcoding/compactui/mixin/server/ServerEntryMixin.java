@@ -25,10 +25,8 @@ import java.util.List;
 
 @Mixin(MultiplayerServerListWidget.ServerEntry.class)
 public abstract class ServerEntryMixin {
-    private int lastRowLeft = 0;
-    private int lastRowTop = 0;
-    private float oneThird32 = 32 / 3f;
-    private float twoThird32 = 32 * 2 / 3f;
+    private static final float oneThird32 = 32 / 3f;
+    private static final float twoThird32 = 32 * 2 / 3f;
 
     @Shadow
     protected abstract boolean canConnect();
@@ -55,32 +53,32 @@ public abstract class ServerEntryMixin {
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawableHelper;fill(Lnet/minecraft/client/util/math/MatrixStack;IIIII)V"))
     private void injectedEditHoverOverlaySize(MatrixStack matrices, int x1, int y1, int x2, int y2, int color) {
-        DrawableHelper.fill(matrices, x1 + (int) twoThird32, y1, x2, y2 - (int) twoThird32, color);
+        DrawableHelper.fill(matrices, x1 + (int) twoThird32, y1, x2 - 1, y2 - (int) twoThird32 - 1, color);
     }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawableHelper;fill(Lnet/minecraft/client/util/math/MatrixStack;IIIII)V"), cancellable = true)
     private void injectedEditHoverArrows(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta, CallbackInfo ci) {
         DrawableHelper.fill(matrices, x + (int) twoThird32, y, x + 32, y + (int) oneThird32, -1601138544);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         int v = mouseX - x;
 
         if (canConnect())
-            DrawableHelper.drawTexture(matrices, x + (int) twoThird32 - 2, y, (int) oneThird32, (int) oneThird32, 0, (v < 32 && v > twoThird32) ? 32f : 0, 32, 32, 256, 256);
+            DrawableHelper.drawTexture(matrices, x + (int) twoThird32 - 2, y, (int) oneThird32, (int) oneThird32, 0, (v < 32 && v > twoThird32) ? 32 : 0, 32, 32, 256, 256);
         if (index > 0)
-            DrawableHelper.drawTexture(matrices, x, y + 2, 16, 16, 96f, (v < oneThird32) ? 32f : 0, 32, 32, 256, 256);
+            DrawableHelper.drawTexture(matrices, x, y + 2, 16, 16, 96, (v < oneThird32) ? 32 : 0, 32, 32, 256, 256);
         if (index < screen.getServerList().size() - 1)
-            DrawableHelper.drawTexture(matrices, x + (int) oneThird32, y - 6, 16, 16, 64f, (v < twoThird32 && v > oneThird32) ? 32f : 0, 32, 32, 256, 256);
+            DrawableHelper.drawTexture(matrices, x + (int) oneThird32, y - 6, 16, 16, 64, (v < twoThird32 && v > oneThird32) ? 32 : 0, 32, 32, 256, 256);
 
         ci.cancel();
     }
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
     private void injectedMouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
-        if (screen instanceof MultiplayerScreenDuckProvider screenDuckProvider) {
-            double d = mouseX - (double) screenDuckProvider.getServerListWidget().getRowLeft();
-            if (d <= 32.0D) {
-                if (d < 32.0D && d > 32 * 2 / 3f && this.canConnect()) {
+        if (screen instanceof MultiplayerScreenDuckProvider duckProvider) {
+            double d = mouseX - (double) duckProvider.getServerListWidget().getRowLeft();
+            if (d <= 32) {
+                if (d < 32 && d > twoThird32 && this.canConnect()) {
                     this.screen.select((MultiplayerServerListWidget.ServerEntry) (Object) this);
                     this.screen.connect();
                     cir.setReturnValue(true);
@@ -88,22 +86,19 @@ public abstract class ServerEntryMixin {
                     return;
                 }
 
-                if (this.screen instanceof MultiplayerScreenDuckProvider duckProvider) {
-                    int i = duckProvider.getServerListWidget().children().indexOf((MultiplayerServerListWidget.ServerEntry) (Object) this);
-                    if (d < 32 / 3f && i > 0) {
-                        swapEntries(i, i - 1);
-                        cir.setReturnValue(true);
-                        cir.cancel();
-                        return;
-                    }
-                    if (d < 32 * 2 / 3f && d > 32 / 3f && i < this.screen.getServerList().size() - 1) {
-                        this.swapEntries(i, i + 1);
-                        cir.setReturnValue(true);
-                        cir.cancel();
-                        return;
-                    }
+                int i = duckProvider.getServerListWidget().children().indexOf((MultiplayerServerListWidget.ServerEntry) (Object) this);
+                if (d < oneThird32 && i > 0) {
+                    swapEntries(i, i - 1);
+                    cir.setReturnValue(true);
+                    cir.cancel();
+                    return;
                 }
-
+                if (d < twoThird32 && d > oneThird32 && i < this.screen.getServerList().size() - 1) {
+                    this.swapEntries(i, i + 1);
+                    cir.setReturnValue(true);
+                    cir.cancel();
+                    return;
+                }
             }
         }
 
