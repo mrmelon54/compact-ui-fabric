@@ -36,7 +36,7 @@ public abstract class WorldEntryMixin {
     private static final Text SNAPSHOT_FIRST_LINE = (new TranslatableText("selectWorld.tooltip.snapshot1")).formatted(Formatting.GOLD);
     private static final Text SNAPSHOT_SECOND_LINE = (new TranslatableText("selectWorld.tooltip.snapshot2")).formatted(Formatting.GOLD);
     private static final Text LOCKED_TEXT = (new TranslatableText("selectWorld.locked")).formatted(Formatting.RED);
-    private static final Text PRE_WORLDHEIGHT_TEXT = (new TranslatableText("selectWorld.pre_worldheight")).formatted(Formatting.RED);
+    private static final Text CONVERSION_TOOLTIP = (new TranslatableText("selectWorld.conversion.tooltip")).formatted(Formatting.RED);
 
     @Shadow
     @Final
@@ -89,10 +89,10 @@ public abstract class WorldEntryMixin {
             if (bl) {
                 this.screen.setTooltip(this.client.textRenderer.wrapLines(LOCKED_TEXT, 175));
             }
-        } else if (this.level.isPreWorldHeightChangeVersion()) {
+        } else if (this.level.requiresConversion()) {
             DrawableHelper.drawTexture(matrices, x, y, (int) oneThird32, (int) oneThird32, 96.0F, 32.0F, 32, 32, 256, 256);
             if (bl) {
-                this.screen.setTooltip(this.client.textRenderer.wrapLines(PRE_WORLDHEIGHT_TEXT, 175));
+                this.screen.setTooltip(this.client.textRenderer.wrapLines(CONVERSION_TOOLTIP, 175));
             }
         } else if (this.level.isDifferentVersion()) {
             DrawableHelper.drawTexture(matrices, x, y, (int) oneThird32, (int) oneThird32, 32.0F, (float) j, 32, 32, 256, 256);

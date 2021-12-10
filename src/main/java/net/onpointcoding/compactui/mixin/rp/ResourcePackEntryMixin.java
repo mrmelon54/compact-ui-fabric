@@ -65,7 +65,7 @@ public abstract class ResourcePackEntryMixin {
         }
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, this.pack.method_30286());
+        RenderSystem.setShaderTexture(0, this.pack.getIconId());
         RenderSystem.setShaderColor(1, 1, 1, 1);
         DrawableHelper.drawTexture(matrices, x + (int) twoThird32, y, (int) oneThird32, (int) oneThird32, 0.0F, 0.0F, 32, 32, 32, 32);
         OrderedText orderedText = this.displayName;
@@ -108,8 +108,8 @@ public abstract class ResourcePackEntryMixin {
                         this.pack.enable();
                     } else {
                         Text text = resourcePackCompatibility.getConfirmMessage();
-                        this.client.openScreen(new ConfirmScreen((bl) -> {
-                            this.client.openScreen(this.screen);
+                        this.client.setScreen(new ConfirmScreen((bl) -> {
+                            this.client.setScreen(this.screen);
                             if (bl) {
                                 this.pack.enable();
                             }
