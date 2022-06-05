@@ -1,4 +1,4 @@
-package net.onpointcoding.compactui.mixin.rp;
+package xyz.mrmelon54.CompactUi.mixin.rp;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
@@ -14,7 +14,7 @@ import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.onpointcoding.compactui.duck.ResourcePackScreenDuckProvider;
+import xyz.mrmelon54.CompactUi.duck.ResourcePackScreenDuckProvider;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

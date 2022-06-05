@@ -1,4 +1,4 @@
-package net.onpointcoding.compactui.duck;
+package xyz.mrmelon54.CompactUi.duck;
 
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerServerListWidget;
 

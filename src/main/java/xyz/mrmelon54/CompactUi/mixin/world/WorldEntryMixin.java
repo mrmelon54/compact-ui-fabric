@@ -1,4 +1,4 @@
-package net.onpointcoding.compactui.mixin.world;
+package xyz.mrmelon54.CompactUi.mixin.world;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -16,7 +16,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
 import net.minecraft.world.level.storage.LevelSummary;
-import net.onpointcoding.compactui.duck.SingleplayerScreenDuckProvider;
+import xyz.mrmelon54.CompactUi.duck.SingleplayerScreenDuckProvider;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

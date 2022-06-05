@@ -1,4 +1,4 @@
-package net.onpointcoding.compactui.mixin.rp;
+package xyz.mrmelon54.CompactUi.mixin.rp;
 
 import net.minecraft.client.gui.screen.pack.PackListWidget;
 import org.spongepowered.asm.mixin.Mixin;

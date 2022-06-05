@@ -8,23 +8,24 @@
     "MrMelon54"
   ],
   "contact": {
-    "homepage": "https://minecraft.onpointcoding.net/mods/compactui",
-    "sources": "https://github.com/MrMelon54/compact-ui-fabric"
+    "homepage": "https://minecraft.mrmelon54.xyz/mods/compact-ui",
+    "sources": "https://github.com/MrMelon54/compact-ui-fabric",
+    "issues": "https://github.com/MrMelon54/compact-ui-fabric/issues"
   },
   "license": "MIT",
   "icon": "assets/compact-ui/icon.png",
-  "accessWidener": "compact-ui.accesswidener",
-  "environment": "*",
+  "accessWidener": "CompactUi.accesswidener",
+  "environment": "client",
   "entrypoints": {
     "client": [
-      "net.onpointcoding.compactui.client.CompactUIClient"
+      "xyz.mrmelon54.CompactUi.client.CompactUIClient"
     ]
   },
   "mixins": [
-    "compact-ui.mixins.json"
+    "CompactUi.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.12.8",
+    "fabricloader": ">=0.14.0",
     "fabric": "*",
     "minecraft": "1.18.x"
   }

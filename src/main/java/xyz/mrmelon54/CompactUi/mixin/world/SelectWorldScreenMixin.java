@@ -1,8 +1,8 @@
-package net.onpointcoding.compactui.mixin.world;
+package xyz.mrmelon54.CompactUi.mixin.world;
 
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldListWidget;
-import net.onpointcoding.compactui.duck.SingleplayerScreenDuckProvider;
+import xyz.mrmelon54.CompactUi.duck.SingleplayerScreenDuckProvider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 

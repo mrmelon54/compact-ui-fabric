@@ -1,8 +1,8 @@
-package net.onpointcoding.compactui.mixin.server;
+package xyz.mrmelon54.CompactUi.mixin.server;
 
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerServerListWidget;
-import net.onpointcoding.compactui.duck.MultiplayerScreenDuckProvider;
+import xyz.mrmelon54.CompactUi.duck.MultiplayerScreenDuckProvider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 

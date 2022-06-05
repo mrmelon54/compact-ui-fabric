@@ -1,4 +1,4 @@
-package net.onpointcoding.compactui.mixin.server;
+package xyz.mrmelon54.CompactUi.mixin.server;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.font.TextRenderer;
@@ -10,7 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.util.Util;
-import net.onpointcoding.compactui.duck.MultiplayerScreenDuckProvider;
+import xyz.mrmelon54.CompactUi.duck.MultiplayerScreenDuckProvider;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

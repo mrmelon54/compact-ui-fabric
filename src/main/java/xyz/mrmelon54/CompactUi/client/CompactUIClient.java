@@ -1,4 +1,4 @@
-package net.onpointcoding.compactui.client;
+package xyz.mrmelon54.CompactUi.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
