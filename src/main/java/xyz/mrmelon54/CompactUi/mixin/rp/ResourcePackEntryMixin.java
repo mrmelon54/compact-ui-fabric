@@ -12,9 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.ResourcePackCompatibility;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import xyz.mrmelon54.CompactUi.duck.ResourcePackScreenDuckProvider;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,12 +20,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import xyz.mrmelon54.CompactUi.duck.ResourcePackScreenDuckProvider;
 
 @Mixin(PackListWidget.ResourcePackEntry.class)
 public abstract class ResourcePackEntryMixin {
     private static final Identifier RESOURCE_PACKS_TEXTURE = new Identifier("textures/gui/resource_packs.png");
-    private static final Text INCOMPATIBLE = new TranslatableText("pack.incompatible");
-    private static final Text INCOMPATIBLE_CONFIRM = new TranslatableText("pack.incompatible.confirm.title");
+    private static final Text INCOMPATIBLE = Text.translatable("pack.incompatible");
+    private static final Text INCOMPATIBLE_CONFIRM = Text.translatable("pack.incompatible.confirm.title");
     private static final float oneThird32 = 32 / 3f;
     private static final float twoThird32 = 32 * 2 / 3f;
 
@@ -70,7 +69,7 @@ public abstract class ResourcePackEntryMixin {
         DrawableHelper.drawTexture(matrices, x + (int) twoThird32, y, (int) oneThird32, (int) oneThird32, 0.0F, 0.0F, 32, 32, 32, 32);
         OrderedText orderedText = this.displayName;
 
-        if (this.isSelectable() && (this.client.options.touchscreen || hovered)) {
+        if (this.isSelectable() && (this.client.options.getTouchscreen().getValue() || hovered)) {
             RenderSystem.setShaderTexture(0, RESOURCE_PACKS_TEXTURE);
             DrawableHelper.fill(matrices, x + (int) twoThird32, y, x + 32 - 1, y + (int) oneThird32, -1601138544);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);

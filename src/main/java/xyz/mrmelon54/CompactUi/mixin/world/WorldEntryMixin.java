@@ -10,13 +10,10 @@ import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldListWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
 import net.minecraft.world.level.storage.LevelSummary;
-import xyz.mrmelon54.CompactUi.duck.SingleplayerScreenDuckProvider;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,18 +22,19 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import xyz.mrmelon54.CompactUi.duck.SingleplayerScreenDuckProvider;
 
-@Mixin(WorldListWidget.Entry.class)
+@Mixin(WorldListWidget.WorldEntry.class)
 public abstract class WorldEntryMixin {
     private static final float oneThird32 = 32 / 3f;
     private static final float twoThird32 = 32 * 2 / 3f;
 
-    private static final Text FROM_NEWER_VERSION_FIRST_LINE = (new TranslatableText("selectWorld.tooltip.fromNewerVersion1")).formatted(Formatting.RED);
-    private static final Text FROM_NEWER_VERSION_SECOND_LINE = (new TranslatableText("selectWorld.tooltip.fromNewerVersion2")).formatted(Formatting.RED);
-    private static final Text SNAPSHOT_FIRST_LINE = (new TranslatableText("selectWorld.tooltip.snapshot1")).formatted(Formatting.GOLD);
-    private static final Text SNAPSHOT_SECOND_LINE = (new TranslatableText("selectWorld.tooltip.snapshot2")).formatted(Formatting.GOLD);
-    private static final Text LOCKED_TEXT = (new TranslatableText("selectWorld.locked")).formatted(Formatting.RED);
-    private static final Text CONVERSION_TOOLTIP = (new TranslatableText("selectWorld.conversion.tooltip")).formatted(Formatting.RED);
+    private static final Text FROM_NEWER_VERSION_FIRST_LINE = Text.translatable("selectWorld.tooltip.fromNewerVersion1").formatted(Formatting.RED);
+    private static final Text FROM_NEWER_VERSION_SECOND_LINE = Text.translatable("selectWorld.tooltip.fromNewerVersion2").formatted(Formatting.RED);
+    private static final Text SNAPSHOT_FIRST_LINE = Text.translatable("selectWorld.tooltip.snapshot1").formatted(Formatting.GOLD);
+    private static final Text SNAPSHOT_SECOND_LINE = Text.translatable("selectWorld.tooltip.snapshot2").formatted(Formatting.GOLD);
+    private static final Text LOCKED_TEXT = Text.translatable("selectWorld.locked").formatted(Formatting.RED);
+    private static final Text CONVERSION_TOOLTIP = Text.translatable("selectWorld.conversion.tooltip").formatted(Formatting.RED);
 
     @Shadow
     @Final
@@ -63,7 +61,7 @@ public abstract class WorldEntryMixin {
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/LevelSummary;getDetails()Lnet/minecraft/text/Text;"))
     private Text injectedRemoveDetails(LevelSummary levelSummary) {
-        return new LiteralText("");
+        return Text.literal("");
     }
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawableHelper;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIFFIIII)V"))
@@ -119,7 +117,7 @@ public abstract class WorldEntryMixin {
             cir.setReturnValue(true);
             cir.cancel();
         } else if (this.screen instanceof SingleplayerScreenDuckProvider duckProvider) {
-            duckProvider.getWorldListWidget().setSelected((WorldListWidget.Entry) (Object) this);
+            duckProvider.getWorldListWidget().setSelected((WorldListWidget.WorldEntry) (Object) this);
             this.screen.worldSelected(duckProvider.getWorldListWidget().getSelectedAsOptional().isPresent());
             if (mouseX - (double) duckProvider.getWorldListWidget().getRowLeft() <= oneThird32) {
                 this.play();
