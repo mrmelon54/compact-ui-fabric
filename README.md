@@ -4,7 +4,7 @@
 
 Requires the [Fabric Loader](https://fabricmc.net/use/) and [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 
-Logo made by [CarbonGhost](https://github.com/CarbonGhost)
+Logo made by [@CarbonGhost](https://github.com/CarbonGhost)
 
 ## Setup
 
@@ -27,3 +27,4 @@ Currently affects the following:
 ## Download
 
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/compact-ui)
+- [Modrinth](https://modrinth.com/mod/compact-ui)
