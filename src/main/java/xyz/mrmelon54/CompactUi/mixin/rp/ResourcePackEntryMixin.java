@@ -20,12 +20,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import xyz.mrmelon54.CompactUi.client.CompactUIClient;
 import xyz.mrmelon54.CompactUi.duck.ResourcePackScreenDuckProvider;
 
 @Mixin(PackListWidget.ResourcePackEntry.class)
 public abstract class ResourcePackEntryMixin {
     private static final Identifier RESOURCE_PACKS_TEXTURE = new Identifier("textures/gui/resource_packs.png");
-    private static final Text INCOMPATIBLE = Text.translatable("pack.incompatible");
     private static final Text INCOMPATIBLE_CONFIRM = Text.translatable("pack.incompatible.confirm.title");
     private static final float oneThird32 = 32 / 3f;
     private static final float twoThird32 = 32 * 2 / 3f;
@@ -58,7 +58,7 @@ public abstract class ResourcePackEntryMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void injectedRender(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta, CallbackInfo ci) {
         ResourcePackCompatibility resourcePackCompatibility = this.pack.getCompatibility();
-        if (!resourcePackCompatibility.isCompatible()) {
+        if (notCompatible(resourcePackCompatibility)) {
             RenderSystem.setShaderColor(1, 1, 1, 1);
             DrawableHelper.fill(matrices, x - 1, y - 1, x + entryWidth - 9, y + entryHeight + 1, -8978432);
         }
@@ -75,10 +75,7 @@ public abstract class ResourcePackEntryMixin {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1, 1, 1, 1);
             int i = mouseX - x;
-            int j = mouseY - y;
-            if (!this.pack.getCompatibility().isCompatible()) {
-                orderedText = this.incompatibleText;
-            }
+            if (notCompatible(this.pack.getCompatibility())) orderedText = this.incompatibleText;
 
             if (this.pack.canBeEnabled())
                 DrawableHelper.drawTexture(matrices, x + (int) twoThird32, y, (int) oneThird32, (int) oneThird32, 0, (i < 32 && i > twoThird32) ? 32 : 0, 32, 32, 256, 256);
@@ -103,7 +100,7 @@ public abstract class ResourcePackEntryMixin {
             if (this.isSelectable() && d <= 32) {
                 if (this.pack.canBeEnabled() && d > twoThird32) {
                     ResourcePackCompatibility resourcePackCompatibility = this.pack.getCompatibility();
-                    if (resourcePackCompatibility.isCompatible()) {
+                    if (isCompatible(resourcePackCompatibility)) {
                         this.pack.enable();
                     } else {
                         Text text = resourcePackCompatibility.getConfirmMessage();
@@ -144,5 +141,14 @@ public abstract class ResourcePackEntryMixin {
         }
         cir.setReturnValue(false);
         cir.cancel();
+    }
+
+    private boolean notCompatible(ResourcePackCompatibility resourcePackCompatibility) {
+        return !isCompatible(resourcePackCompatibility);
+    }
+
+    private boolean isCompatible(ResourcePackCompatibility resourcePackCompatibility) {
+        if (CompactUIClient.getInstance().hasNRPW()) return true;
+        return resourcePackCompatibility.isCompatible();
     }
 }
