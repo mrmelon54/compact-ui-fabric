@@ -59,7 +59,7 @@ public abstract class ServerEntryMixin {
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawableHelper;fill(Lnet/minecraft/client/util/math/MatrixStack;IIIII)V"), cancellable = true)
     private void injectedEditHoverArrows(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta, CallbackInfo ci) {
         DrawableHelper.fill(matrices, x + (int) twoThird32, y, x + 32, y + (int) oneThird32, -1601138544);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         int v = mouseX - x;
 

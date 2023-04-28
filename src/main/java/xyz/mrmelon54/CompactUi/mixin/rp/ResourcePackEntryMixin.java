@@ -63,7 +63,7 @@ public abstract class ResourcePackEntryMixin {
             DrawableHelper.fill(matrices, x - 1, y - 1, x + entryWidth - 9, y + entryHeight + 1, -8978432);
         }
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderTexture(0, this.pack.getIconId());
         RenderSystem.setShaderColor(1, 1, 1, 1);
         DrawableHelper.drawTexture(matrices, x + (int) twoThird32, y, (int) oneThird32, (int) oneThird32, 0.0F, 0.0F, 32, 32, 32, 32);
@@ -72,7 +72,7 @@ public abstract class ResourcePackEntryMixin {
         if (this.isSelectable() && (this.client.options.getTouchscreen().getValue() || hovered)) {
             RenderSystem.setShaderTexture(0, RESOURCE_PACKS_TEXTURE);
             DrawableHelper.fill(matrices, x + (int) twoThird32, y, x + 32 - 1, y + (int) oneThird32, -1601138544);
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.setShader(GameRenderer::getPositionTexProgram);
             RenderSystem.setShaderColor(1, 1, 1, 1);
             int i = mouseX - x;
             if (notCompatible(this.pack.getCompatibility())) orderedText = this.incompatibleText;

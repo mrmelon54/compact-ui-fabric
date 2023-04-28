@@ -77,7 +77,7 @@ public abstract class WorldEntryMixin {
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawableHelper;fill(Lnet/minecraft/client/util/math/MatrixStack;IIIII)V"), cancellable = true)
     private void injectedFixArrows(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta, CallbackInfo ci) {
         DrawableHelper.fill(matrices, x, y, x + (int) oneThird32, y + (int) oneThird32, -1601138544);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int i = mouseX - x;
         boolean bl = i < oneThird32;
@@ -118,7 +118,8 @@ public abstract class WorldEntryMixin {
             cir.cancel();
         } else if (this.screen instanceof SingleplayerScreenDuckProvider duckProvider) {
             duckProvider.getWorldListWidget().setSelected((WorldListWidget.WorldEntry) (Object) this);
-            this.screen.worldSelected(duckProvider.getWorldListWidget().getSelectedAsOptional().isPresent());
+            boolean present = duckProvider.getWorldListWidget().getSelectedAsOptional().isPresent();
+            this.screen.worldSelected(present && duckProvider.getWorldListWidget().getSelectedAsOptional().get().isAvailable(), present);
             if (mouseX - (double) duckProvider.getWorldListWidget().getRowLeft() <= oneThird32) {
                 this.play();
                 cir.setReturnValue(true);
